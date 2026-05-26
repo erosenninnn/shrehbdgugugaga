@@ -178,7 +178,7 @@ function showDialogue(lines, onDone) {
 k.scene("loading", () => {
   k.setGravity(0);
   k.setBackground(20, 10, 30);
-  k.add([k.text("🍅TOMATO LAND🍅", { size: 32 }), k.pos(k.width()/2, k.height()/2-40), k.anchor("center"), k.color(255,182,213)]);
+  k.add([k.text("🍅 TOMATO LAND 🍅", { size: 32 }), k.pos(k.width()/2, k.height()/2-40), k.anchor("center"), k.color(255,182,213)]);
   k.add([k.rect(400, 16, { radius: 8 }), k.pos(k.width()/2, k.height()/2+50), k.anchor("center"), k.color(50,30,60)]);
   const bar = k.add([k.rect(0, 16, { radius: 8 }), k.pos(k.width()/2-200, k.height()/2+42), k.color(255,182,213)]);
   k.add([k.text("loading...", { size: 10 }), k.pos(k.width()/2, k.height()/2+80), k.anchor("center"), k.color(160,140,200)]);
@@ -204,7 +204,7 @@ k.scene("grassland", () => {
     k.pos(0, 0), k.z(0),
   ]);
   k.add([k.sprite("shre", { anim: "idle" }), k.pos(200, k.height()-133), k.anchor("bot"), k.scale(SPRITE_SCALE), k.z(10)]);
-  k.add([k.text("🍅TOMATO LAND🍅", { size: 24 }), k.pos(k.width()/2, 60), k.anchor("center"), k.color(255,182,213), k.z(10)]);
+  k.add([k.text("🍅 TOMATO LAND 🍅", { size: 24 }), k.pos(k.width()/2, 60), k.anchor("center"), k.color(255,182,213), k.z(10)]);
   k.add([k.text("Press any key to begin ✨", { size: 12 }), k.pos(k.width()/2, k.height()-150), k.anchor("center"), k.color(255,240,255), k.z(10)]);
   const go = () => k.go("greeting");
   k.onKeyPress(go);
