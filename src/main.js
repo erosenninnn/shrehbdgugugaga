@@ -51,6 +51,12 @@ let quizMusic = null;
 let level2Music = null;
 let level3Music = null;
 
+function startMainMusic() {
+  if (!bgMusic) {
+    bgMusic = k.play("bgm_main", { loop: true, volume: 0.4 });
+  }
+}
+
 function playSfx(name, volume = 0.5) {
   return k.play(name, { volume });
 }
@@ -275,10 +281,6 @@ k.scene("loading", () => {
 //k.play("bgm_main", { loop: true, volume: 0.4 });
 k.scene("grassland", () => {
   k.setGravity(0);
-  // 2. Play the music right as this scene loads!
-  if (!bgMusic) {
-    bgMusic = k.play("bgm_main", { loop: true, volume: 0.4 });
-  }
 
   k.add([
     k.sprite("sunflower_bg", { width: k.width(), height: k.height() }),
@@ -287,7 +289,7 @@ k.scene("grassland", () => {
   k.add([k.sprite("shre", { anim: "idle" }), k.pos(200, k.height()-133), k.anchor("bot"), k.scale(SPRITE_SCALE), k.z(10)]);
   k.add([k.text("🍅 TOMATO LAND 🍅", { size: 24 }), k.pos(k.width()/2, 60), k.anchor("center"), k.color(255,182,213), k.z(10)]);
   k.add([k.text("Press any key to begin ✨", { size: 12 }), k.pos(k.width()/2, k.height()-150), k.anchor("center"), k.color(255,240,255), k.z(10)]);
-  const go = () => { playSfx("select", 0.35); k.go("greeting"); };
+  const go = () => { startMainMusic(); playSfx("select", 0.35); k.go("greeting"); };
   k.onKeyPress(go);
   k.onClick(go);
   k.onGamepadButtonPress(go);
