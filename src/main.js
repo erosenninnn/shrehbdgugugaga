@@ -1216,7 +1216,7 @@ k.scene("pondlevel3", () => {
     { sprite: "memory3", caption: "woof woof madre" },
     { sprite: "memory4", caption: "happy burday sheruu,\nthank vv for being there through those fuckass years. u da day one twin🔥 genuine grateful found u from the queue <crazy butterfly effect; lives were def altered>. come lko ghummi fasfas pls miss hanging out w u sm😞 we’ll explore new places and cook tgt and make dancey reels pakka promise <nashe asw hehe>. miss getting high w u and listening to ur elite music taste <bombay bandook will always be associated w u>. lwk a hoe for getting 99 w everyone tho💔. dont forget me when u go to da big city make an exception pls ik u dont like college people🥀💔\nlove u gemini u da real art😛" },
     { sprite: "memory5", caption: "happy birthday shre!! first sem felt so easy with you, you became such a core memory of my college life omg we are already talking this like a nostalgia AAAA nvm I hope if we ever decide to do mba, I’ll pray for the same college and then we’ll have the same class so we can sneak out for some beer😝 and this time we will try all the food recommendation together <3 thank you for always being there I cannot imagine those mid semester crisis without you, ly" },
-    { sprite: "memory6", caption: "[ Caption 6 — write something here 🩷 ]" },
+    { sprite: "memory6", caption: "happiest birthday shre <3!\nty for being the most genuine person i know. also ty for interacting with me before college and just being there yk :). i hope you get everything you want and deserve in life bub, also peep my aura farm pose 😝. i just realized we dont have any pics together so we do need to fix that, see you soon in blr 😈😈.\nalso shoutout to aryan for cooking ts hard\n- weeboo" },
     { sprite: "memory7", caption: "hi hiii\nhappyyy birthdayyy shre!!! 🩷\nwill always be grateful that out of that whole line of randoms 3.something years ago, it was u that we chose <3\nwill always be grateful for this friendship and for getting to know someone like u.\nheavy miss u js randomly entering the room w absolutely anything and everything \nheavy miss the gossip sessions\ntop tier activity honestly.\nand i’ll always be sorry for all the times i ended up hurting u in some way or the other :( never intentional but i know that doesn’t make it hurt less.\ni really hope u know how loved and appreciated u are. like actually. u deserve the softest happiest things always.\nalways always just a text or call away if u ever need kuch bhi, or even if u just wanna talk/rant/cry/gossip about kuch bhi. no matter how much time passes.\npraying this year brings u peace, good people, good health, good memories and everything good and nice only!!\nthank u for being u, shre 🫶\nhappy burdayyy" },
     { sprite: "memory8", caption: "happy birthday shre <3\ni still curse aryan in my mind for not finding you earlier. you are really da most genuine person i know :3 thank you for hearing me out whenever im ranting about the same shit again and again [especially when aryan keeps letting his undiagnosed adhd get to him (we still love you aryan)]\ni love you and you will forever mean so much to me :*" },
     
@@ -1819,10 +1819,10 @@ function showLoveLetter() {
 
 
 // ─── START ────────────────────────────────────────────────────────────────────
-k.go("loading");
-//k.go("reunion");
+// k.go("loading");
+// k.go("reunion");
 //k.go("celebration");
 //k.go("cake");
 //k.go("pre_cake");
-//k.go("pondlevel3");
+k.go("pondlevel3");
 //k.go("level3cleared");
