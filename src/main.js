@@ -1741,7 +1741,7 @@ k.scene("celebration", () => {
 });
 
 // 3. THE DELAYED POPUP CHAIN
-k.wait(4.5, () => {
+k.wait(14.5, () => {
 
   // ── POPUP 1 — shown first ──────────────────────────────────────────────
   const p1objs = [];
