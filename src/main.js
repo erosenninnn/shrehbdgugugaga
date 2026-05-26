@@ -28,8 +28,68 @@ function snapPixelPos(obj) {
 //sounds
 k.loadSound("bgm_main", "sounds/bgm_main.ogg");
 k.loadSound("bgm_cake", "sounds/bgm_cake.ogg");
+k.loadSound("pond_music", "sounds/pond_music.ogg");
+k.loadSound("quiz_music", "sounds/quiz_music.ogg");
+k.loadSound("level2_music", "sounds/level2_music.ogg");
+k.loadSound("level3_music", "sounds/level3_music.ogg");
+k.loadSound("jump", "sounds/jump.wav");
+k.loadSound("collect", "sounds/collect.wav");
+k.loadSound("hurt", "sounds/hurt.wav");
+k.loadSound("correct", "sounds/correct.wav");
+k.loadSound("wrong", "sounds/wrong.wav");
+k.loadSound("dialogue", "sounds/dialogue.wav");
+k.loadSound("level_clear", "sounds/level_clear.wav");
+k.loadSound("jumpscare_sfx", "sounds/jumpscare.wav");
+k.loadSound("candle", "sounds/candle.wav");
+k.loadSound("confetti", "sounds/confetti.wav");
+k.loadSound("select", "sounds/select.wav");
+k.loadSound("boat", "sounds/boat.wav");
 
 let bgMusic = null;
+let pondMusic = null;
+let quizMusic = null;
+let level2Music = null;
+let level3Music = null;
+
+function playSfx(name, volume = 0.5) {
+  return k.play(name, { volume });
+}
+
+function stopPondMusic() {
+  if (pondMusic) {
+    pondMusic.stop();
+    pondMusic = null;
+  }
+}
+
+function stopQuizMusic() {
+  if (quizMusic) {
+    quizMusic.stop();
+    quizMusic = null;
+  }
+}
+
+function stopLevel2Music() {
+  if (level2Music) {
+    level2Music.stop();
+    level2Music = null;
+  }
+}
+
+function stopLevel3Music() {
+  if (level3Music) {
+    level3Music.stop();
+    level3Music = null;
+  }
+}
+
+function playTimedSfx(name, timer, interval, volume = 0.35) {
+  if (timer <= 0) {
+    playSfx(name, volume);
+    return interval;
+  }
+  return timer;
+}
 
 
 
@@ -174,6 +234,7 @@ function showDialogue(lines, onDone) {
   });
 
   const advance = k.onKeyPress("space", () => {
+    playSfx("dialogue", 0.22);
     if (isTyping) {
       isTyping = false;
       txt.text = lines[idx];
@@ -226,7 +287,7 @@ k.scene("grassland", () => {
   k.add([k.sprite("shre", { anim: "idle" }), k.pos(200, k.height()-133), k.anchor("bot"), k.scale(SPRITE_SCALE), k.z(10)]);
   k.add([k.text("🍅 TOMATO LAND 🍅", { size: 24 }), k.pos(k.width()/2, 60), k.anchor("center"), k.color(255,182,213), k.z(10)]);
   k.add([k.text("Press any key to begin ✨", { size: 12 }), k.pos(k.width()/2, k.height()-150), k.anchor("center"), k.color(255,240,255), k.z(10)]);
-  const go = () => k.go("greeting");
+  const go = () => { playSfx("select", 0.35); k.go("greeting"); };
   k.onKeyPress(go);
   k.onClick(go);
   k.onGamepadButtonPress(go);
@@ -353,6 +414,7 @@ k.scene("greeting", () => {
       snapPixelPos(shre);
 
       if (shre.pos.x > k.width() + 20) {
+        playSfx("select", 0.3);
         k.go("pond");
       }
     }
@@ -364,10 +426,20 @@ k.scene("greeting", () => {
 k.scene("pond", () => {
   k.setGravity(0);
   // 3. Properly stop the music when entering the pond
-  
+  if (bgMusic) {
+    bgMusic.stop();
+    bgMusic = null;
+  }
+  stopQuizMusic();
+  stopLevel2Music();
+  stopLevel3Music();
+  if (!pondMusic) {
+    pondMusic = k.play("pond_music", { loop: true, volume: 0.3 });
+  }
 
   // FIX 3: If all 3 levels are done, skip the pond entirely → go to reunion
   if (completedLevels.every(v => v)) {
+    stopPondMusic();
     k.go("reunion",{ startBoatX: k.width() - 300 });//If you want it even closer, use k.width() - 350 or k.width() - 300
     return;
   }
@@ -483,6 +555,8 @@ k.scene("pond", () => {
 
   let iPhase  = returningFromLevel ? 8 : 0;
   let iTimer  = 0;
+  let boatSfxTimer = 0;
+  let scriptedBoatSfxTimer = 0;
 
   let playerMode  = returningFromLevel;
   let shreAnim    = "idle";
@@ -512,6 +586,7 @@ k.scene("pond", () => {
     }
 
     if (!playerMode) {
+      scriptedBoatSfxTimer -= k.dt();
       iTimer += k.dt();
 
       if (iPhase === 0 && iTimer > 0.6) {
@@ -535,6 +610,7 @@ k.scene("pond", () => {
 
       else if (iPhase === 2) {
         boat.pos.x += CROSS_SPEED * k.dt();
+        scriptedBoatSfxTimer = playTimedSfx("boat", scriptedBoatSfxTimer, 0.45, 0.18);
         snapPixelPos(boat);
         if (boat.pos.x >= RIGHT_DOCK_X) {
           boat.pos.x = RIGHT_DOCK_X;
@@ -549,6 +625,7 @@ k.scene("pond", () => {
 
       else if (iPhase === 3) {
         boat.pos.x -= RETURN_SPEED * k.dt();
+        scriptedBoatSfxTimer = playTimedSfx("boat", scriptedBoatSfxTimer, 0.45, 0.18);
         snapPixelPos(boat);
         if (boat.pos.x <= LEFT_DOCK_X) {
           boat.pos.x = LEFT_DOCK_X;
@@ -573,6 +650,7 @@ k.scene("pond", () => {
 
       else if (iPhase === 5) {
         boat.pos.x += CROSS_SPEED * k.dt();
+        scriptedBoatSfxTimer = playTimedSfx("boat", scriptedBoatSfxTimer, 0.45, 0.18);
         snapPixelPos(boat);
         if (boat.pos.x >= RIGHT_DOCK_X) {
           boat.pos.x = RIGHT_DOCK_X;
@@ -587,6 +665,7 @@ k.scene("pond", () => {
 
       else if (iPhase === 6) {
         boat.pos.x -= RETURN_SPEED * k.dt();
+        scriptedBoatSfxTimer = playTimedSfx("boat", scriptedBoatSfxTimer, 0.45, 0.18);
         snapPixelPos(boat);
         if (boat.pos.x <= LEFT_DOCK_X) {
           boat.pos.x = LEFT_DOCK_X;
@@ -612,6 +691,7 @@ k.scene("pond", () => {
 
     // ── Player mode ───────────────────────────────────────────────────────
     else {
+      boatSfxTimer -= k.dt();
       const left  = k.isKeyDown("left")  || k.isKeyDown("a");
       const right = k.isKeyDown("right") || k.isKeyDown("d");
 
@@ -619,10 +699,12 @@ k.scene("pond", () => {
         boat.pos.x -= BOAT_SPEED * k.dt();
         rider.flipX = true;
         setShreAnim("walkL");
+        boatSfxTimer = playTimedSfx("boat", boatSfxTimer, 0.45, 0.18);
       } else if (right && boat.pos.x < k.width()-200) {
         boat.pos.x += BOAT_SPEED * k.dt();
         rider.flipX = false;
         setShreAnim("walkR");
+        boatSfxTimer = playTimedSfx("boat", boatSfxTimer, 0.45, 0.18);
       } else {
         setShreAnim("idle");
       }
@@ -635,6 +717,7 @@ k.scene("pond", () => {
       // FIX 3: Only trigger flags that haven't been completed yet
       flagData.forEach(({ x, levelIdx }) => {
         if (!completedLevels[levelIdx] && Math.abs(boat.pos.x - x) < 36) {
+          playSfx("select", 0.35);
           k.go(`pondlevel${levelIdx + 1}`);
         }
       });
@@ -646,9 +729,13 @@ k.scene("pond", () => {
 // ─── SCENE: POND LEVEL 1 — TRIVIA ────────────────────────────────────────────
 k.scene("pondlevel1", () => {
   k.setGravity(0);
+  stopPondMusic();
   if (bgMusic) {
     bgMusic.stop();
     bgMusic = null; // Clear it out
+  }
+  if (!quizMusic) {
+    quizMusic = k.play("quiz_music", { loop: true, volume: 0.28 });
   }
   
   // 1. ADD YOUR NEW BACKGROUND AT THE BOTTOM LAYER
@@ -734,17 +821,20 @@ k.scene("pondlevel1", () => {
     answered = true;
     const q = questions[currentQ];
     if (idx === q.correct) {
+      playSfx("correct", 0.45);
       btnRects[idx].color = k.rgb(60,180,100);
       flashScreen(k.rgb(60,200,80), 0.15);
       feedbackText.text = q.rightLine;
       continueHint.text = "— SPACE to continue —";
       const next = k.onKeyPress("space", () => {
+        playSfx("select", 0.25);
         next.cancel();
         currentQ++;
-        if (currentQ >= questions.length) { k.go("level1cleared"); }
+        if (currentQ >= questions.length) { stopQuizMusic(); k.go("level1cleared"); }
         else { loadQuestion(currentQ); }
       });
     } else {
+      playSfx("wrong", 0.45);
       btnRects[idx].color = k.rgb(200,60,60);
       flashScreen(k.rgb(220,40,40), 0.15);
       lives--;
@@ -752,7 +842,7 @@ k.scene("pondlevel1", () => {
       feedbackText.text = q.wrongLines[Math.min(3-lives, q.wrongLines.length-1)];
       if (lives <= 0) {
         jumpscareFrom = "pondlevel1";
-        k.wait(1.0, () => k.go("jumpscare"));
+        k.wait(1.0, () => { stopQuizMusic(); k.go("jumpscare"); });
       } else {
         continueHint.text = "— try again! —";
         k.wait(1.2, () => { answered = false; feedbackText.text = ""; continueHint.text = ""; btnRects[idx].color = BASE_COLORS[idx]; });
@@ -770,6 +860,7 @@ k.scene("pondlevel1", () => {
 // ─── SCENE: JUMPSCARE ─────────────────────────────────────────────────────────
 k.scene("jumpscare", () => {
   k.setGravity(0);
+  playSfx("jumpscare_sfx", 0.65);
   
   k.setBackground(255, 255, 255);
   k.add([k.sprite("jumpscare"), k.pos(k.width()/2, k.height()/2), k.anchor("center"), k.scale(k.height()/1280*1.1), k.z(10)]);
@@ -785,14 +876,16 @@ k.scene("jumpscare", () => {
   k.wait(1.2, () => {
     k.add([k.text("YOU GOT TS GIRL 🩷", {size: 20}), k.pos(k.width()/2, k.height()-100), k.anchor("center"), k.color(255,182,213), k.fixed(), k.z(25)]);
     k.add([k.text("press SPACE", {size: 10}), k.pos(k.width()/2, k.height()-65), k.anchor("center"), k.color(200,180,255), k.fixed(), k.z(25)]);
-    k.onKeyPress("space", () => { k.camPos(k.width()/2, k.height()/2); k.go(jumpscareFrom); });
-    k.onClick(()         => { k.camPos(k.width()/2, k.height()/2); k.go(jumpscareFrom); });
+    k.onKeyPress("space", () => { playSfx("select", 0.25); k.camPos(k.width()/2, k.height()/2); k.go(jumpscareFrom); });
+    k.onClick(()         => { playSfx("select", 0.25); k.camPos(k.width()/2, k.height()/2); k.go(jumpscareFrom); });
   });
 });
 
 // ─── SCENE: LEVEL 1 CLEARED ───────────────────────────────────────────────────
 k.scene("level1cleared", () => {
   k.setGravity(0);
+  playSfx("level_clear", 0.45);
+  playSfx("confetti", 0.22);
   k.setBackground(10, 5, 25);
   k.add([k.sprite("level1cleared"), k.pos(k.width()/2, k.height()/2), k.anchor("center"), k.scale(k.width()/1280), k.z(1)]);
   k.add([k.rect(k.width(),k.height()), k.pos(0,0), k.color(0,0,0), k.opacity(0.35), k.fixed(), k.z(2)]);
@@ -807,14 +900,18 @@ k.scene("level1cleared", () => {
   k.add([k.text("You know your stuff, Shre 🩷", {size: 12}), k.pos(k.width()/2,138), k.anchor("center"), k.color(255,240,255), k.fixed(), k.z(20)]);
   k.wait(1.5, () => {
     k.add([k.text("Press SPACE to keep sailing →", {size: 10}), k.pos(k.width()/2, k.height()-55), k.anchor("center"), k.color(200,180,255), k.fixed(), k.z(20)]);
-    k.onKeyPress("space", () => { completedLevels[0]=true; k.go("pond"); });
-    k.onClick(()         => { completedLevels[0]=true; k.go("pond"); });
+    k.onKeyPress("space", () => { playSfx("select", 0.25); completedLevels[0]=true; k.go("pond"); });
+    k.onClick(()         => { playSfx("select", 0.25); completedLevels[0]=true; k.go("pond"); });
   });
 });
 
 // ─── SCENE: POND LEVEL 2 — PETAL CATCH ───────────────────────────────────────
 k.scene("pondlevel2", () => {
   k.setGravity(0);
+  stopPondMusic();
+  if (!level2Music) {
+    level2Music = k.play("level2_music", { loop: true, volume: 0.3 });
+  }
 
   // 1. ADD THE NEW BACKGROUND
   k.add([
@@ -971,6 +1068,7 @@ k.scene("pondlevel2", () => {
       const ch = k.onClick(dismiss);
 
       function dismiss() {
+        playSfx("select", 0.25);
         kh.cancel();
         ch.cancel();
         objs.forEach(o => { try { o.destroy(); } catch (_) {} });
@@ -997,6 +1095,7 @@ k.scene("pondlevel2", () => {
 
   function loseLife(resume) {
     if (processingHit) return;
+    playSfx("hurt", 0.4);
     processingHit = true;
     gameActive    = false;
 
@@ -1008,7 +1107,7 @@ k.scene("pondlevel2", () => {
 
     if (lives <= 0) {
       jumpscareFrom = "pondlevel2";
-      k.wait(0.6, () => k.go("jumpscare"));
+      k.wait(0.6, () => { stopLevel2Music(); k.go("jumpscare"); });
       return;
     }
 
@@ -1030,6 +1129,7 @@ k.scene("pondlevel2", () => {
     gameActive = false;
     clearAllPetals();
     completedLevels[1] = true;
+    stopLevel2Music();
     k.go("level2cleared");
   }
 
@@ -1086,6 +1186,7 @@ k.scene("pondlevel2", () => {
           loseLife(null);
           return;
         } else {
+          playSfx("collect", 0.35);
           flashScreen(k.rgb(255, 100, 180), 0.12);
           if (phase === "fair") {
             fairCaught++;
@@ -1120,6 +1221,8 @@ k.scene("pondlevel2", () => {
 // ─── SCENE: LEVEL 2 CLEARED ───────────────────────────────────────────────────
 k.scene("level2cleared", () => {
   k.setGravity(0);
+  playSfx("level_clear", 0.45);
+  playSfx("confetti", 0.22);
   k.setBackground(10, 5, 25);
 
   k.add([
@@ -1170,8 +1273,8 @@ k.scene("level2cleared", () => {
       k.pos(k.width() / 2, k.height() - 55), k.anchor("center"),
       k.color(200, 180, 255), k.fixed(), k.z(20),
     ]);
-    k.onKeyPress("space", () => { completedLevels[1] = true; k.go("pond"); });
-    k.onClick(()         => { completedLevels[1] = true; k.go("pond"); });
+    k.onKeyPress("space", () => { playSfx("select", 0.25); completedLevels[1] = true; k.go("pond"); });
+    k.onClick(()         => { playSfx("select", 0.25); completedLevels[1] = true; k.go("pond"); });
   });
 });
 
@@ -1179,6 +1282,10 @@ k.scene("level2cleared", () => {
 // ─── SCENE: POND LEVEL 3 — MEMORY RAIN ───────────────────────────────────────
 k.scene("pondlevel3", () => {
   k.setGravity(1200);
+  stopPondMusic();
+  if (!level3Music) {
+    level3Music = k.play("level3_music", { loop: true, volume: 0.32 });
+  }
 
   // 1. ADD THE NEW BACKGROUND
   k.add([
@@ -1290,7 +1397,7 @@ k.scene("pondlevel3", () => {
       const hint = k.add([k.text("— SPACE to continue —", { size: 8 }), k.pos(centerX, centerY + (boxH / 2) - 25), k.anchor("center"), k.color(160, 140, 200), k.fixed(), k.z(202)]);
       objs.push(hint);
       const kh = k.onKeyPress("space", dismiss), ch = k.onClick(dismiss);
-      function dismiss() { kh.cancel(); ch.cancel(); objs.forEach(o => { if (o && !o.destroyed) o.destroy(); }); showingPopup = false; onDone(); }
+      function dismiss() { playSfx("select", 0.25); kh.cancel(); ch.cancel(); objs.forEach(o => { if (o && !o.destroyed) o.destroy(); }); showingPopup = false; onDone(); }
     });
   }
 
@@ -1310,6 +1417,7 @@ k.scene("pondlevel3", () => {
   }
 
   function catchMemory() {
+    playSfx("collect", 0.4);
     fallingMem.active = false; fallingMem.destroy(); fallingMem = null;
     if (glowRing) { glowRing.destroy(); glowRing = null; }
     caught++; updateHUD();
@@ -1320,6 +1428,7 @@ k.scene("pondlevel3", () => {
     showPopup(data, () => { 
         gameActive = true; 
         if (currentIdx >= memoryData.length) { 
+            stopLevel3Music();
             completedLevels[2]=true; k.go("level3cleared"); 
         } else { 
             spawnMemory(); 
@@ -1328,12 +1437,13 @@ k.scene("pondlevel3", () => {
   }
 
   function missMemory() {
+    playSfx("hurt", 0.4);
     fallingMem.active = false; fallingMem.destroy(); fallingMem = null;
     if (glowRing) { glowRing.destroy(); glowRing = null; }
     lives--; updateHUD();
     const flash = k.add([k.rect(k.width(),k.height()), k.pos(0,0), k.color(220,40,40), k.opacity(0.35), k.fixed(), k.z(300)]);
     k.wait(0.2, () => flash.destroy());
-    if (lives <= 0) { jumpscareFrom = "pondlevel3"; k.wait(0.5, () => k.go("jumpscare")); }
+    if (lives <= 0) { jumpscareFrom = "pondlevel3"; k.wait(0.5, () => { stopLevel3Music(); k.go("jumpscare"); }); }
     else { k.wait(0.9, () => spawnMemory()); }
   }
 
@@ -1364,7 +1474,10 @@ k.scene("pondlevel3", () => {
 
   // Jump controls restricted to UP and W only
   k.onKeyPress(["up", "w"], () => { 
-    if (!showingPopup && shre.isGrounded()) shre.jump(JUMP_FORCE); 
+    if (!showingPopup && shre.isGrounded()) {
+      playSfx("jump", 0.35);
+      shre.jump(JUMP_FORCE);
+    } 
   });
   
   updateHUD();
@@ -1377,6 +1490,8 @@ k.scene("pondlevel3", () => {
 // ─── SCENE: LEVEL 3 CLEARED ──────────────────────────────────────────────────
 k.scene("level3cleared", () => {
   k.setGravity(0);
+  playSfx("level_clear", 0.45);
+  playSfx("confetti", 0.22);
   k.setBackground(10, 5, 25);
 
   k.add([k.rect(k.width(),k.height()), k.pos(0,0), k.color(0,0,0), k.opacity(0.35), k.fixed(), k.z(2)]);
@@ -1406,14 +1521,15 @@ k.scene("level3cleared", () => {
 
   k.wait(1.5, () => {
     k.add([k.text("Press SPACE to reach the shore →", {size: 10}), k.pos(k.width()/2, k.height()-55), k.anchor("center"), k.color(200,180,255), k.fixed(), k.z(20)]);
-    k.onKeyPress("space", () => { completedLevels[2] = true; k.go("pond"); });
-    k.onClick(()         => { completedLevels[2] = true; k.go("pond"); });
+    k.onKeyPress("space", () => { playSfx("select", 0.25); completedLevels[2] = true; k.go("pond"); });
+    k.onClick(()         => { playSfx("select", 0.25); completedLevels[2] = true; k.go("pond"); });
   });
 });
 
 // ─── SCENE: REUNION ──────────────────────────────────────────────────────────
 k.scene("reunion", (args = {}) => {
   k.setGravity(0);
+  let reunionBoatSfxTimer = 0;
 
   k.add([
     k.sprite("pondbackground", { width: k.width(), height: k.height() }),
@@ -1512,8 +1628,10 @@ k.scene("reunion", (args = {}) => {
 
     // ── Phase 0: boat sails right to the dock ────────────────────────────
     if (phase === 0) {
+      reunionBoatSfxTimer -= k.dt();
       boat.pos.x += SAIL_SPEED * k.dt();
       boat.pos.y  = bobY();
+      reunionBoatSfxTimer = playTimedSfx("boat", reunionBoatSfxTimer, 0.45, 0.18);
       rider.pos.x = boat.pos.x + SHRE_BOAT_OFFSET.x;
       rider.pos.y = boat.pos.y + SHRE_BOAT_OFFSET.y;
       snapPixelPos(boat);
@@ -1592,6 +1710,7 @@ k.scene("reunion", (args = {}) => {
       snapPixelPos(shre);
 
       if (shre.pos.x > k.width() + 20) {
+        playSfx("select", 0.3);
         k.go("pre_cake");
       }
     }
@@ -1601,6 +1720,7 @@ k.scene("reunion", (args = {}) => {
 // ─── SCENE: THE QUIET REVEAL (PRE-CAKE) ───────────────────────────────────────
 k.scene("pre_cake", () => {
   k.setGravity(0);
+  stopPondMusic();
   // 2. Play the music right as this scene loads!
   if (!bgMusic) {
     bgMusic = k.play("bgm_cake", { loop: true, volume: 0.4 });
@@ -1650,7 +1770,7 @@ k.scene("pre_cake", () => {
   // Make the button hoverable/clickable
   nextBtn.onHover(() => nextBtn.color = k.rgb(255, 130, 180));
   nextBtn.onHoverEnd(() => nextBtn.color = k.rgb(255, 100, 160));
-  nextBtn.onClick(() => k.go("cake"));
+  nextBtn.onClick(() => { playSfx("select", 0.3); k.go("cake"); });
 });
 
 // ─── SCENE: CAKE ENDING ───────────────────────────────────────────────────────
@@ -1681,6 +1801,7 @@ k.scene("cake", () => {
   
   cakeClick.onClick(() => {
     if (popupOpen) return; popupOpen=true; hint.destroy();
+    playSfx("select", 0.25);
     k.add([k.rect(k.width(),k.height()),k.pos(0,0),k.color(0,0,0),k.opacity(0.55),k.fixed(),k.z(200)]);
     k.add([k.rect(480,200,{radius:12}),k.pos(k.width()/2,k.height()/2),k.anchor("center"),k.color(20,10,35),k.outline(3,k.rgb(255,182,213)),k.fixed(),k.z(201)]);
     k.add([k.text("🕯️  Make a wish, Shre!",{size:22}),k.pos(k.width()/2,k.height()/2-50),k.anchor("center"),k.color(255,220,180),k.fixed(),k.z(202)]);
@@ -1689,14 +1810,15 @@ k.scene("cake", () => {
     k.add([k.text("Yes! 🎂",{size: 10}),k.pos(k.width()/2-85,k.height()/2+55),k.anchor("center"),k.color(255,255,255),k.fixed(),k.z(203)]);
     const no=k.add([k.rect(140,44,{radius:8}),k.pos(k.width()/2+85,k.height()/2+55),k.anchor("center"),k.color(60,40,90),k.outline(2,k.rgb(180,160,220)),k.area(),k.fixed(),k.z(202)]);
     k.add([k.text("Not yet…",{size: 10}),k.pos(k.width()/2+85,k.height()/2+55),k.anchor("center"),k.color(200,180,255),k.fixed(),k.z(203)]);
-    yes.onClick(() => k.go("celebration"));
-    no.onClick(()  => k.go("cake"));
+    yes.onClick(() => { playSfx("candle", 0.45); k.go("celebration"); });
+    no.onClick(()  => { playSfx("select", 0.25); k.go("cake"); });
   });
 });
 
 // ─── SCENE: CELEBRATION ───────────────────────────────────────────────────────
 k.scene("celebration", () => {
   k.setGravity(0); // TURN GRAVITY OFF to prevent physics crashes!
+  playSfx("confetti", 0.35);
   addBackground("cake_bg");
 
   const FLOOR_Y = k.height() - 80;
@@ -1794,6 +1916,7 @@ k.wait(14.5, () => {
     const ch = k.onClick(dismiss1);
 
     function dismiss1() {
+      playSfx("dialogue", 0.22);
       kh.cancel(); ch.cancel();
       p1objs.forEach(o => { try { o.destroy(); } catch(_) {} });
       showLoveLetter();
@@ -1819,10 +1942,10 @@ function showLoveLetter() {
 
 
 // ─── START ────────────────────────────────────────────────────────────────────
-// k.go("loading");
+k.go("loading");
 // k.go("reunion");
 //k.go("celebration");
 //k.go("cake");
 //k.go("pre_cake");
-k.go("pondlevel3");
+// k.go("pondlevel3");
 //k.go("level3cleared");
