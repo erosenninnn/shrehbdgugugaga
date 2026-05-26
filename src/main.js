@@ -8,6 +8,7 @@ const k = kaplay({
   title: "🍅TOMATO LAND🍅",
   pixelArt: true,
   font: "pressstart2p",
+  maxFPS: 60, // to prevent slow movement on high refresh rate monitors
   // FIX 1: Removed pixelDensity: window.devicePixelRatio
   // That option causes non-integer scaling which produces black fringe artifacts
   // on pixel art sprites (the "black lines" on Shre). Kaplay renders crisply at 1x.
@@ -105,6 +106,12 @@ function showDialogue(lines, onDone) {
   let typeTimer = 0;
   let isTyping = true;
 
+  function getSpeakerSprite(line) {
+    const speaker = line.split(":")[0]?.trim().toLowerCase();
+    if (speaker === "kuromi" || speaker === "simba") return speaker;
+    return null;
+  }
+
   // Made the box slightly taller and wider
   const box = k.add([
     k.rect(760, 130), k.pos(k.width()/2, k.height()-80),
@@ -120,12 +127,24 @@ function showDialogue(lines, onDone) {
     k.outline(2, k.rgb(180,140,200)),
     k.fixed(), k.z(151)
   ]);
-  const portraitPlaceholder = k.add([
-    k.text("?", { size: 24 }),
+  const portrait = k.add([
+    k.sprite(getSpeakerSprite(lines[idx]) ?? "kuromi", { anim: "idle" }),
     k.pos(k.width()/2 - 320, k.height()-80),
-    k.anchor("center"), k.color(100,80,120),
+    k.anchor("center"), k.scale(2.5),
     k.fixed(), k.z(152)
   ]);
+  portrait.hidden = !getSpeakerSprite(lines[idx]);
+
+  function updatePortrait() {
+    const speakerSprite = getSpeakerSprite(lines[idx]);
+    if (!speakerSprite) {
+      portrait.hidden = true;
+      return;
+    }
+
+    portrait.hidden = false;
+    portrait.use(k.sprite(speakerSprite, { anim: "idle" }));
+  }
 
   const txt = k.add([
     // ✨ ADDED lineSpacing: 6 so the chunky text doesn't overlap
@@ -163,12 +182,13 @@ function showDialogue(lines, onDone) {
       if (idx >= lines.length) {
         advance.cancel(); typeUpdate.cancel();
         box.destroy(); txt.destroy(); hint.destroy();
-        portraitBg.destroy(); portraitPlaceholder.destroy();
+        portraitBg.destroy(); portrait.destroy();
         onDone();
       } else {
         charIdx = 0;
         isTyping = true;
         txt.text = "";
+        updatePortrait();
       }
     }
   });
