@@ -92,7 +92,7 @@ k.loadSprite("flag", "sprites/flagnew.png"); // Make sure the name matches exact
 k.loadSprite("jumpscare", "sprites/jumpscare.jpeg", { filter: "linear" });
 k.loadSprite("level1cleared", "sprites/level1cleared.jpeg", { filter: "linear" });
 k.loadSprite("prank", "sprites/prank.jpeg", { filter: "linear" });
-["memory1","memory2","memory3","memory4","memory5","memory6","memory7","memory8","memory9"]
+["memory1","memory2","memory3","memory4","memory5","memory6","memory7","memory8","memory9","memory10","memory11"]
   .forEach(name => k.loadSprite(name, `sprites/${name}.jpeg`, { filter: "linear" }));
 // ─── SHARED STATE ─────────────────────────────────────────────────────────────
 let completedLevels = [false, false, false];
@@ -1202,6 +1202,7 @@ k.scene("pondlevel3", () => {
     
     { sprite: "memory9", caption: "nigga j told me to add ts here so" },
     { sprite: "memory10", caption: "you da shi - mir" },
+    { sprite: "memory11", caption: "poopchamp shi" },
   ];
 
   let lives = 3, caught = 0;
