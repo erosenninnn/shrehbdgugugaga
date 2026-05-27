@@ -39,7 +39,7 @@ k.loadSound("correct", "sounds/correct.wav");
 k.loadSound("wrong", "sounds/wrong.wav");
 k.loadSound("dialogue", "sounds/dialogue.wav");
 k.loadSound("level_clear", "sounds/level_clear.wav");
-k.loadSound("jumpscare_sfx", "sounds/jumpscare.ogg");
+k.loadSound("jumpscare_sfx", "sounds/jumpscare.wav");
 k.loadSound("candle", "sounds/candle.wav");
 k.loadSound("confetti", "sounds/confetti.wav");
 k.loadSound("select", "sounds/select.wav");
