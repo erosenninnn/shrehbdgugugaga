@@ -13,7 +13,7 @@ const k = kaplay({
   // That option causes non-integer scaling which produces black fringe artifacts
   // on pixel art sprites (the "black lines" on Shre). Kaplay renders crisply at 1x.
 });
-k.loadFont("pressstart2p", "/fonts/PressStart2P-Regular.ttf");
+k.loadFont("pressstart2p", "fonts/PressStart2P-Regular.ttf");
 // ─── PIXEL-ART CONSTANTS ──────────────────────────────────────────────────────
 const SPRITE_SCALE = 3;
 const BOAT_SCALE   = 2;
