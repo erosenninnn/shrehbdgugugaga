@@ -39,7 +39,7 @@ k.loadSound("correct", "sounds/correct.wav");
 k.loadSound("wrong", "sounds/wrong.wav");
 k.loadSound("dialogue", "sounds/dialogue.wav");
 k.loadSound("level_clear", "sounds/level_clear.wav");
-k.loadSound("jumpscare_sfx", "sounds/jumpscare.wav");
+k.loadSound("jumpscare_sfx", "sounds/jumpscare.ogg");
 k.loadSound("candle", "sounds/candle.wav");
 k.loadSound("confetti", "sounds/confetti.wav");
 k.loadSound("select", "sounds/select.wav");
@@ -265,7 +265,7 @@ function showDialogue(lines, onDone) {
 k.scene("loading", () => {
   k.setGravity(0);
   k.setBackground(20, 10, 30);
-  k.add([k.text("🍅 TOMATO LAND 🍅", { size: 32 }), k.pos(k.width()/2, k.height()/2-40), k.anchor("center"), k.color(255,182,213)]);
+  k.add([k.text("🍅TOMATO LAND🍅", { size: 32 }), k.pos(k.width()/2, k.height()/2-40), k.anchor("center"), k.color(255,182,213)]);
   k.add([k.rect(400, 16, { radius: 8 }), k.pos(k.width()/2, k.height()/2+50), k.anchor("center"), k.color(50,30,60)]);
   const bar = k.add([k.rect(0, 16, { radius: 8 }), k.pos(k.width()/2-200, k.height()/2+42), k.color(255,182,213)]);
   k.add([k.text("loading...", { size: 10 }), k.pos(k.width()/2, k.height()/2+80), k.anchor("center"), k.color(160,140,200)]);
@@ -1484,7 +1484,7 @@ k.scene("pondlevel3", () => {
   
   updateHUD();
   showDialogue([
-    "Kuromi: These are some of da messages from poeple who fw you heavy\nhope you like  🖤",
+    "Kuromi: These are some of da messages from poeple who fw you heavy\nhope you like it! 🖤",
     "Kuromi: Catch the sparkling stars to unlock them! 🎀",
   ], () => spawnMemory());
 });
