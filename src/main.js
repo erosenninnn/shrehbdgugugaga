@@ -287,7 +287,7 @@ k.scene("grassland", () => {
     k.pos(0, 0), k.z(0),
   ]);
   k.add([k.sprite("shre", { anim: "idle" }), k.pos(200, k.height()-133), k.anchor("bot"), k.scale(SPRITE_SCALE), k.z(10)]);
-  k.add([k.text("🍅 TOMATO LAND 🍅", { size: 24 }), k.pos(k.width()/2, 60), k.anchor("center"), k.color(255,182,213), k.z(10)]);
+  k.add([k.text("🍅TOMATO LAND🍅", { size: 24 }), k.pos(k.width()/2, 60), k.anchor("center"), k.color(255,182,213), k.z(10)]);
   k.add([k.text("Press any key to begin ✨", { size: 12 }), k.pos(k.width()/2, k.height()-150), k.anchor("center"), k.color(255,240,255), k.z(10)]);
   const go = () => { startMainMusic(); playSfx("select", 0.35); k.go("greeting"); };
   k.onKeyPress(go);
@@ -381,7 +381,7 @@ k.scene("greeting", () => {
           kuromi.play("wave");
           showDialogue([
             "Kuromi: Shre!! We've been waiting for you 🖤",
-            "Kuromi: Come on — the pond is this way! 🎀",
+            "Kuromi: Come on,the pond is this way! 🎀",
             "Simba: *wags tail excitedly*",
           ], () => {
             kuromi.play("walk");
@@ -674,7 +674,7 @@ k.scene("pond", () => {
           iPhase = 7; iTimer = 0;
           showDialogue([
             "Kuromi: Your turn, Shre! The pond has a few surprises 🎀",
-            "Kuromi: Sail to each flag to play — we'll be cheering! 🖤",
+            "Kuromi: Sail to each flag to play, we'll be cheering you on! 🖤",
           ], () => {
             buildFlags();
             hintLabel.opacity = 1;
@@ -763,21 +763,21 @@ k.scene("pondlevel1", () => {
       q: "Who is the GOAT?",
       options: ["A. SHRE", "B. GUGLOODON", "C. TOMATO", "D. ALL OF THE ABOVE"],
       correct: 3,
-      wrongLines: ["Kuromi: girl you sure about that...?? xp", "Simba: *bark (bruh) bark*", "Kuromi: So close… but not quite 🖤"],
+      wrongLines: ["Kuromi: girl you sure about that...?? xp", "Simba: *bark (bruh) bark*", "Kuromi: So close… but nah bruh 🖤"],
       rightLine: "Kuromi: OBVIOUSLY. All of the above!! 🖤🩷",
     },
     {
       q: "Shreya Prasad is the CEO of?",
       options: ["A. Vakil Prasad and Sons", "B. SHRENOYO PVT. LMTD.", "C. Patra Electronics", "D. CEO of SEX"],
       correct: 2,
-      wrongLines: ["Simba: *shakes head slowly*", "Kuromi: That's not it bestie 😭", "Kuromi: LMAOOO no 💀"],
+      wrongLines: ["Simba: *awhellnah*", "Kuromi: That's not it bestie 😭", "Kuromi: LMAOOO no 💀"],
       rightLine: "Kuromi: THE CEO OF PATRA ELECTRONICS 🎉",
     },
     {
       q: "Shre loves many things,\nbut what does she love MOST?",
       options: ["A. Fish", "B. Porn", "C. Girls", "D. poopchamp?"],
       correct: 3,
-      wrongLines: ["Simba: *tilts head*", "Kuromi: Hmmmm. Try again 👀", "Kuromi: Are you Shre? Because Shre would know 😭"],
+      wrongLines: ["Simba: *brah is that even a question*", "Kuromi: Hmmmm. Try again 👀", "Kuromi: Are you Shre? Because Shre would know 😭"],
       rightLine: "Kuromi: POOPCHAMP!!! Obviously!! 🩷🩷",
     },
   ];
@@ -899,7 +899,7 @@ k.scene("level1cleared", () => {
   }
   k.onUpdate(() => { pieces.forEach(p => { p.pos.y+=p.vy*k.dt(); p.pos.x+=p.vx*k.dt(); if(p.pos.y>k.height()+20){p.pos.y=k.rand(-80,-5);p.pos.x=k.rand(0,k.width());} }); });
   k.add([k.text("LEVEL 1 CLEARED! 🎉", {size: 28}), k.pos(k.width()/2,80), k.anchor("center"), k.color(255,182,213), k.fixed(), k.z(20)]);
-  k.add([k.text("You know your stuff, Shre 🩷", {size: 12}), k.pos(k.width()/2,138), k.anchor("center"), k.color(255,240,255), k.fixed(), k.z(20)]);
+  k.add([k.text("You da shi SHERU 🩷", {size: 12}), k.pos(k.width()/2,138), k.anchor("center"), k.color(255,240,255), k.fixed(), k.z(20)]);
   k.wait(1.5, () => {
     k.add([k.text("Press SPACE to keep sailing →", {size: 10}), k.pos(k.width()/2, k.height()-55), k.anchor("center"), k.color(200,180,255), k.fixed(), k.z(20)]);
     k.onKeyPress("space", () => { playSfx("select", 0.25); completedLevels[0]=true; k.go("pond"); });
@@ -1050,7 +1050,7 @@ k.scene("pondlevel2", () => {
       k.outline(3, k.rgb(255, 182, 213)), k.fixed(), k.z(201),
     ]));
     objs.push(k.add([
-      k.text("DW GANG, I WON'T MAKE IT THAT TUFF FOR YOU, IT WAS DONE FOR PURELY FUNNY PURPOSES, HEHE", { size: 12, width: 440, align: "center" }),
+      k.text("DW GANG, I WON'T MAKE IT THAT TUFF FOR YOU, WAS JUST TRYNA RAGEBAIT, HEHE", { size: 12, width: 440, align: "center" }),
       k.pos(k.width() / 2, k.height() / 2 - 148),
       k.anchor("center"), k.color(255, 182, 213), k.fixed(), k.z(202),
     ]));
@@ -1330,8 +1330,8 @@ k.scene("pondlevel3", () => {
     { sprite: "memory8", caption: "happy birthday shre <3\ni still curse aryan in my mind for not finding you earlier. you are really da most genuine person i know :3 thank you for hearing me out whenever im ranting about the same shit again and again [especially when aryan keeps letting his undiagnosed adhd get to him (we still love you aryan)]\ni love you and you will forever mean so much to me :*" },
     
     { sprite: "memory9", caption: "nigga j told me to add ts here so" },
-    { sprite: "memory10", caption: "you da shi - mir" },
-    { sprite: "memory11", caption: "Be the forever husband beater mi corazon.\nI fw you heavy gang." },
+    { sprite: "memory10", caption: "Happy birthday shrey!\nYaar aapke kafi chatpate ho aur aise hi chatpate rehna. Aryan ki pitti pitti karna humara full support hai😋\n-mir" },
+    { sprite: "memory11", caption: "Be the forever husband beater mi corazon.\nI fw you heavy gang. I will always be glad that i thought replying to story likes was a thing(so glad) thank you for being who you are gang. Thank you for making and pushing me to be a better version of myself, what would I even do without you(janwin)\nI hope you enjoy this version of da website as well.\nAILOVU" },
   ];
 
   let lives = 3, caught = 0;
@@ -1484,7 +1484,7 @@ k.scene("pondlevel3", () => {
   
   updateHUD();
   showDialogue([
-    "Kuromi: These are some of da messages from poeple who fw you heavy\nhope you like it! 🖤",
+    "Kuromi: These are some of da messages from poeple who fw you heavy\nhope you like them! 🖤",
     "Kuromi: Catch the sparkling stars to unlock them! 🎀",
   ], () => spawnMemory());
 });
@@ -1663,7 +1663,7 @@ k.scene("reunion", (args = {}) => {
 
         showDialogue([
           "Kuromi: YOU MADE IT!! 🖤🖤🖤",
-          "Simba: *zooms around Shre in excited circles*",
+          "Simba: *zoomies around Shre in circles*",
           "Kuromi: Come on — there's one more thing waiting for you 🎂",
         ], () => {
           kuromi.flipX = false;
@@ -1685,7 +1685,7 @@ k.scene("reunion", (args = {}) => {
       if (kuromi.pos.x > k.width() + 40) {
         phase = 4;
         const hint = k.add([
-          k.text("→ follow them!", { size: 13 }),
+          k.text("→ follow them!", { size: 10 }),
           k.pos(shre.pos.x + 80, shre.pos.y - 80),
           k.anchor("center"), k.color(255, 220, 180), k.opacity(0.9), k.z(20),
         ]);
@@ -1795,7 +1795,7 @@ k.scene("cake", () => {
   // Cake 
   k.add([k.sprite("cake",{anim:"lit"}), k.pos(k.width()/2, CAKE_Y + 10), k.anchor("bot"), k.scale(2.5), k.z(4)]);
   
-  const hint = k.add([k.text("🕯️ Click the cake to make a wish!",{size: 10}),k.pos(k.width()/2,k.height()-400),k.anchor("center"),k.color(255,220,180),k.z(10)]);
+  const hint = k.add([k.text("Click the cake to make a wish! 🕯️",{size: 10}),k.pos(k.width()/2,k.height()-400),k.anchor("center"),k.color(255,220,180),k.z(10)]);
   let hintT=0, popupOpen=false;
   k.onUpdate(() => { hintT+=k.dt(); hint.opacity=0.6+0.4*Math.sin(hintT*3); });
   
@@ -1806,7 +1806,7 @@ k.scene("cake", () => {
     playSfx("select", 0.25);
     k.add([k.rect(k.width(),k.height()),k.pos(0,0),k.color(0,0,0),k.opacity(0.55),k.fixed(),k.z(200)]);
     k.add([k.rect(480,200,{radius:12}),k.pos(k.width()/2,k.height()/2),k.anchor("center"),k.color(20,10,35),k.outline(3,k.rgb(255,182,213)),k.fixed(),k.z(201)]);
-    k.add([k.text("🕯️  Make a wish, Shre!",{size:22}),k.pos(k.width()/2,k.height()/2-50),k.anchor("center"),k.color(255,220,180),k.fixed(),k.z(202)]);
+    k.add([k.text("Make a wish, Shre! 🕯️",{size:22}),k.pos(k.width()/2,k.height()/2-50),k.anchor("center"),k.color(255,220,180),k.fixed(),k.z(202)]);
     k.add([k.text("Blow out the candles?",{size: 10}),k.pos(k.width()/2,k.height()/2-10),k.anchor("center"),k.color(220,200,255),k.fixed(),k.z(202)]);
     const yes=k.add([k.rect(140,44,{radius:8}),k.pos(k.width()/2-85,k.height()/2+55),k.anchor("center"),k.color(255,100,160),k.area(),k.fixed(),k.z(202)]);
     k.add([k.text("Yes! 🎂",{size: 10}),k.pos(k.width()/2-85,k.height()/2+55),k.anchor("center"),k.color(255,255,255),k.fixed(),k.z(203)]);
@@ -1853,7 +1853,7 @@ k.scene("celebration", () => {
   }
 
   // 2. THE CONTINUOUS RAIN
-  const rainTexts = ["Happy Birthday!", "🖤", "🩷", "tomato", "🎂", "✨" ,"balle balle"];
+  const rainTexts = ["Happy Birthday!","happy buddayyy","hbd","bomboclat", "🖤", "🩷", "tomato", "🎂", "✨" ,"budday ji","22","hbdhbdhbd","poojabipowers","YAYY!!"];
   k.loop(0.1, () => {
       const isText = k.rand() > 0.7; 
       if (isText) {
@@ -1900,7 +1900,7 @@ k.wait(14.5, () => {
     k.anchor("center"), k.color(255, 182, 213), k.fixed(), k.z(22)
   ]));
   p1objs.push(k.add([
-    k.text("You are loved sheru, always remember that. Nobody could be as majestic as a 22 y/o shre btw. \nSHRE WILL ALWAYS BE LOVED", {size: 10, width: 500, align: "center"}),
+    k.text("You are loved tomato, always remember that. Nobody could be as majestic as a 22 y/o shre btw. \nSHRE WILL ALWAYS BE LOVED", {size: 10, width: 500, align: "center"}),
     k.pos(k.width()/2, k.height()/2 + 15),
     k.anchor("center"), k.color(255, 240, 245), k.fixed(), k.z(22)
   ]));
@@ -1936,7 +1936,7 @@ function showLoveLetter() {
   
   k.add([
     // ✨ ADDED lineSpacing: 8 and increased width so the final message looks gorgeous
-    k.text("I will always fw you heavy dawg, hope this works as a small reminder for that. You da shi brah\n\nHAPPY 22 gugloodon\nI love you", {size: 10, width: 680, align: "center", lineSpacing: 8}),
+    k.text("I will always fw you heavy dawg, hope this works as a small reminder for that. You da shi brah, forever grateful for  you, hehe.\n\nHAPPY 22 gugloodon\nI love you", {size: 10, width: 680, align: "center", lineSpacing: 8}),
     k.pos(k.width()/2, k.height()/2 + 30), k.anchor("center"), k.color(255, 240, 245), k.fixed(), k.z(22)
   ]);
 }
