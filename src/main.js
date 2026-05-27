@@ -1320,9 +1320,9 @@ k.scene("pondlevel3", () => {
   k.add([k.text("Simba",{size: 6}), k.pos(k.width()-55,GROUND_Y-58), k.anchor("center"), k.color(210,170,100), k.z(6)]);
 
   const memoryData = [
-    { sprite: "memory1", caption: "familia" },
-    { sprite: "memory2", caption: "from ne" },
-    { sprite: "memory3", caption: "woof woof madre" },
+    { sprite: "memory1", caption: "Happy Birthday to the SMART and SENSIBLE daughter of the family. Proud to see how far you have come and extremely confident about your bright future. Love you and Simbs does love you more!" },
+    { sprite: "memory2", caption: "Happy Birthday Shrey! I am glad to be the one who was there with you when you took your first steps and also there with you when you took your first shot. People usually crib about their younger sister being immature, I was never one of them. You have always been my safe space and doing anything without telling you feels wrong, anything that you don't approve feels wrong. Thank you for being my rock since Day 1. I love you" },
+    { sprite: "memory3", caption: "woof woof nigga" },
     { sprite: "memory4", caption: "happy burday sheruu,\nthank vv for being there through those fuckass years. u da day one twin🔥 genuine grateful found u from the queue <crazy butterfly effect; lives were def altered>. come lko ghummi fasfas pls miss hanging out w u sm😞 we’ll explore new places and cook tgt and make dancey reels pakka promise <nashe asw hehe>. miss getting high w u and listening to ur elite music taste <bombay bandook will always be associated w u>. lwk a hoe for getting 99 w everyone tho💔. dont forget me when u go to da big city make an exception pls ik u dont like college people🥀💔\nlove u gemini u da real art😛" },
     { sprite: "memory5", caption: "happy birthday shre!! first sem felt so easy with you, you became such a core memory of my college life omg we are already talking this like a nostalgia AAAA nvm I hope if we ever decide to do mba, I’ll pray for the same college and then we’ll have the same class so we can sneak out for some beer😝 and this time we will try all the food recommendation together <3 thank you for always being there I cannot imagine those mid semester crisis without you, ly" },
     { sprite: "memory6", caption: "happiest birthday shre <3!\nty for being the most genuine person i know. also ty for interacting with me before college and just being there yk :). i hope you get everything you want and deserve in life bub, also peep my aura farm pose 😝. i just realized we dont have any pics together so we do need to fix that, see you soon in blr 😈😈.\nalso shoutout to aryan for cooking ts hard\n- weeboo" },
@@ -1331,7 +1331,7 @@ k.scene("pondlevel3", () => {
     
     { sprite: "memory9", caption: "nigga j told me to add ts here so" },
     { sprite: "memory10", caption: "you da shi - mir" },
-    { sprite: "memory11", caption: "poopchamp shi" },
+    { sprite: "memory11", caption: "Be the forever husband beater mi corazon.\nI fw you heavy gang." },
   ];
 
   let lives = 3, caught = 0;
